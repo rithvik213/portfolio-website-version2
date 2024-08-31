@@ -6,8 +6,11 @@ import {
   Box,
   SimpleGrid,
   Button,
+  Stack,
+  IconButton,
   List,
   ListItem,
+  Text,
   useColorModeValue
 } from '@chakra-ui/react'
 import { ChevronRightIcon, EmailIcon } from '@chakra-ui/icons'
@@ -17,8 +20,9 @@ import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import { GridItem } from '../components/grid-item'
 import { IoLogoTwitter, IoLogoInstagram, IoLogoGithub } from 'react-icons/io5'
-import thumbYouTube from '../public/images/links/youtube.png'
-import thumbInkdrop from '../public/images/works/inkdrop_eyecatch.png'
+import { BsGithub, BsLinkedin, BsMedium } from 'react-icons/bs'
+import thumbTimo from '../public/images/works/timo_3.jpg'
+import thumbTripPlanner from '../public/images/works/tripplanner_2-Photoroom.jpg'
 import Image from 'next/image'
 
 const Home = () => (
@@ -32,15 +36,40 @@ const Home = () => (
         bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
         css={{ backdropFilter: 'blur(10px)' }}
       >
-        Hello, I&apos;m an indie app developer based in Japan!
+        Hello, I'm a BA/MS CS student at BU with a passion for cars!
       </Box>
 
       <Box display={{ md: 'flex' }}>
         <Box flexGrow={1}>
           <Heading as="h2" variant="page-title">
-            Takuya Matsuyama
+            Rithvik Nakirikanti
           </Heading>
-          <p>Digital Craftsman ( Artist / Developer / Designer )</p>
+           {/* Add your buttons and links here */}
+          <Stack mt={4} spacing={4} direction='row' align='center'>
+            <Link href="/files/resume.pdf" target="_blank">
+              <Button rightIcon={<ChevronRightIcon />} colorScheme="teal" size='md' variant='solid'>
+                Resume / CV
+              </Button>
+            </Link>
+            <Link href="https://github.com/rithvik213" target="_blank">
+              <IconButton
+                variant='outline'
+                colorScheme='teal'
+                aria-label='github'
+                fontSize='20px'
+                icon={<BsGithub />}
+              />
+            </Link>
+            <Link href="https://www.linkedin.com/in/rithvik-nakirikanti/" target="_blank">
+              <IconButton
+                variant='outline'
+                colorScheme='teal'
+                aria-label='linkedin'
+                fontSize='20px'
+                icon={<BsLinkedin />}
+              />
+            </Link>
+          </Stack>
         </Box>
         <Box
           flexShrink={0}
@@ -59,7 +88,7 @@ const Home = () => (
             overflow="hidden"
           >
             <Image
-              src="/images/takuya.jpg"
+              src="/images/profile.jpg"
               alt="Profile image"
               width="100"
               height="100"
@@ -70,34 +99,15 @@ const Home = () => (
 
       <Section delay={0.1}>
         <Heading as="h3" variant="section-title">
-          Work
+          About Me
         </Heading>
         <Paragraph>
-          Takuya is a freelance and a full-stack developer based in Osaka with a
-          passion for building digital services/stuff he wants. He has a knack
-          for all things launching products, from planning and designing all the
-          way to solving real-life problems with code. When not online, he loves
-          hanging out with his camera. Currently, he is living off of his own
-          product called{' '}
-          <Link as={NextLink} href="/works/inkdrop" passHref scroll={false}>
-            Inkdrop
-          </Link>
-          . He publishes content for marketing his products and his YouTube
-          channel called &quot;
-          <Link
-            as={NextLink}
-            href="https://www.youtube.com/devaslife"
-            passHref
-            target="_blank"
-          >
-            Dev as Life
-          </Link>
-          &quot; has more than 100k subscribers.
+          Hey, I'm Rithvik! I'm a full-stack developer and computer science graduate student at Boston University. I'm deeply interested in enterprise architecture, database systems, and leveraging AI to enhance product value. At Verizon, I've led initiatives to optimize infrastructure and integrate advanced technologies, saving millions annually. I'm passionate about solving complex problems and creating impactful solutions.{' '}
         </Paragraph>
         <Box align="center" my={4}>
           <Button
             as={NextLink}
-            href="/works"
+            href="/portfolios"
             scroll={false}
             rightIcon={<ChevronRightIcon />}
             colorScheme="teal"
@@ -109,132 +119,57 @@ const Home = () => (
 
       <Section delay={0.2}>
         <Heading as="h3" variant="section-title">
-          Bio
+        🚀 I&apos;m interested in...
         </Heading>
         <BioSection>
-          <BioYear>1984</BioYear>
-          Born in Osaka (大阪), Japan.
+          <BioYear>Enterprise Architecture</BioYear>
+          openshift, docker, kubernetes, jenkins
         </BioSection>
         <BioSection>
-          <BioYear>2010</BioYear>
-          Completed the Master&apos;s Program in the Graduate School of
-          Information Science at Nara Institute of Science and Technology
-          (奈良先端科学技術大学院大学情報科学研究科修士課程)
+          <BioYear>Database Systems</BioYear>
+          postgres, sql, mongodb, distributed systems
         </BioSection>
         <BioSection>
-          <BioYear>2010</BioYear>
-          Worked at Yahoo! Japan (ヤフー株式会社入社)
+          <BioYear>AI & ML</BioYear>
+          tensorflow, ai model integration, data science
         </BioSection>
         <BioSection>
-          <BioYear>2012 to present</BioYear>
-          Working as a freelancer
+          <BioYear>Web & Mobile Development</BioYear>
+          react.js, node.js, kotlin, android, selenium, flask
+        </BioSection>
+        <BioSection>
+          <BioYear>Cloud & Infrastructure</BioYear>
+          aws, on-premise solutions, apache spark pipelines
         </BioSection>
       </Section>
 
       <Section delay={0.3}>
         <Heading as="h3" variant="section-title">
-          I ♥
+        💡 I&apos;m most proud of...
         </Heading>
-        <Paragraph>
-          Art, Music,{' '}
-          <Link href="https://illust.odoruinu.net/" target="_blank">
-            Drawing
-          </Link>
-          , Playing Drums,{' '}
-          <Link href="https://500px.com/p/craftzdog" target="_blank">
-            Photography
-          </Link>
-          , Leica, Machine Learning
-        </Paragraph>
-      </Section>
-
-      <Section delay={0.3}>
-        <Heading as="h3" variant="section-title">
-          On the web
-        </Heading>
-        <List>
-          <ListItem>
-            <Link href="https://github.com/craftzdog" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoGithub />}
-              >
-                @craftzdog
-              </Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href="https://twitter.com/inkdrop_app" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoTwitter />}
-              >
-                @inkdrop_app (English)
-              </Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href="https://twitter.com/craftzdog" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoTwitter />}
-              >
-                @craftzdog (日本語)
-              </Button>
-            </Link>
-          </ListItem>
-          <ListItem>
-            <Link href="https://instagram.com/craftzdog" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<IoLogoInstagram />}
-              >
-                @craftzdog
-              </Button>
-            </Link>
-          </ListItem>
-        </List>
-
         <SimpleGrid columns={[1, 2, 2]} gap={6}>
           <GridItem
             href="https://www.youtube.com/devaslife"
-            title="Dev as Life"
-            thumbnail={thumbYouTube}
+            title="Timo"
+            thumbnail={thumbTimo}
           >
-            My YouTube channel (&gt;200k subs)
+            An Ultimate Time Management Tool
           </GridItem>
           <GridItem
             href="https://www.inkdrop.app/"
-            title="Inkdrop"
-            thumbnail={thumbInkdrop}
+            title="TripPlanner"
+            thumbnail={thumbTripPlanner}
           >
-            A Markdown note-taking app
+            An All-in-One Trip Planner
           </GridItem>
         </SimpleGrid>
 
         <Heading as="h3" variant="section-title">
-          Newsletter
+        📷 Car Collection 
         </Heading>
         <p>
-          Join me on a behind-the-scenes coding journey. Weekly updates on
-          projects, tutorials, and videos
+        Photos and videos 
         </p>
-
-        <Box align="center" my={4}>
-          <Button
-            as={NextLink}
-            href="https://www.devas.life/"
-            scroll={false}
-            leftIcon={<EmailIcon />}
-            colorScheme="teal"
-          >
-            Sign up my newsletter here
-          </Button>
-        </Box>
       </Section>
     </Container>
   </Layout>
