@@ -31,7 +31,7 @@ RUN ls -la /node_modules
 RUN ls -la /public
 
 # Verify structure
-RUN ls =la /
+RUN ls -la /
 
 EXPOSE 3000
 CMD ["yarn", "start"]
