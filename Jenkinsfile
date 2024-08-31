@@ -10,14 +10,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("localhost:5000/your-image-name:${env.BUILD_ID}")
+                    dockerImage = docker.build("10.3.0.223:5000/personal-website:${env.BUILD_ID}")
                 }
             }
         }
         stage('Push Docker Image to Local Registry') {
             steps {
                 script {
-                    docker.withRegistry('http://localhost:5000') {
+                    docker.withRegistry('http://10.3.0.223:5000') {
                         dockerImage.push("latest")
                     }
                 }
