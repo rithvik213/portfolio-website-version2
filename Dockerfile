@@ -2,6 +2,7 @@
 FROM node:16-alpine as builder
 WORKDIR /app
 COPY package.json yarn.lock ./
+RUN ls -la /app
 RUN yarn install
 COPY . .
 RUN yarn build
