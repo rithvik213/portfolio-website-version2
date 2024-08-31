@@ -1,4 +1,4 @@
-# Takuya's Homepage
+# Rithvik's Homepage
 
 [https://www.rntech.org/](https://www.rntech.org/)
 
