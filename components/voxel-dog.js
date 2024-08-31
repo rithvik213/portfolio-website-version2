@@ -11,11 +11,16 @@ function easeOutCirc(x) {
 const VoxelDog = () => {
   const refContainer = useRef()
   const [loading, setLoading] = useState(true)
-  const refRenderer = useRef()
-  const urlDogGLB = (process.env.NODE_ENV === 'production' ? 'https://craftzdog.global.ssl.fastly.net/homepage' : '') + '/dog.glb'
+  const [renderer, setRenderer] = useState()
+  const [_camera, setCamera] = useState()
+  const [target] = useState(new THREE.Vector3(0, -0.2, 0))  // Adjusted Y position
+  const [initialCameraPosition] = useState(
+    new THREE.Vector3(0, 10, 20)
+  )
+  const [scene] = useState(new THREE.Scene())
+  const [_controls, setControls] = useState()
 
   const handleWindowResize = useCallback(() => {
-    const { current: renderer } = refRenderer
     const { current: container } = refContainer
     if (container && renderer) {
       const scW = container.clientWidth
@@ -23,83 +28,114 @@ const VoxelDog = () => {
 
       renderer.setSize(scW, scH)
     }
-  }, [])
+  }, [renderer])
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const { current: container } = refContainer
-    if (container) {
+    if (container && !renderer) {
       const scW = container.clientWidth
       const scH = container.clientHeight
 
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
-        alpha: true
+        alpha: true,
+        precision: "highp"
       })
       renderer.setPixelRatio(window.devicePixelRatio)
       renderer.setSize(scW, scH)
       renderer.outputEncoding = THREE.sRGBEncoding
+      renderer.shadowMap.enabled = false;
       container.appendChild(renderer.domElement)
-      refRenderer.current = renderer
-      const scene = new THREE.Scene()
+      setRenderer(renderer)
 
-      const target = new THREE.Vector3(-0.5, 1.2, 0)
-      const initialCameraPosition = new THREE.Vector3(
-        20 * Math.sin(0.2 * Math.PI),
-        10,
-        20 * Math.cos(0.2 * Math.PI)
-      )
-
-      // 640 -> 240
-      // 8   -> 6
-      const scale = scH * 0.005 + 4.8
+      const scale = scH * 0.0018
       const camera = new THREE.OrthographicCamera(
         -scale,
         scale,
         scale,
         -scale,
-        0.01,
-        50000
+        0.1,
+        3000
       )
       camera.position.copy(initialCameraPosition)
       camera.lookAt(target)
+      setCamera(camera)
 
-      const ambientLight = new THREE.AmbientLight(0xcccccc, Math.PI)
+      // Lighting adjustments
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
       scene.add(ambientLight)
+
+      const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.5)
+      directionalLight1.position.set(5, 10, 7.5)
+      scene.add(directionalLight1)
+
+      const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.5)
+      directionalLight2.position.set(-5, 10, -7.5)
+      scene.add(directionalLight2)
 
       const controls = new OrbitControls(camera, renderer.domElement)
       controls.autoRotate = true
+      controls.enableDamping = true
+      controls.dampingFactor = 0.1
       controls.target = target
+      setControls(controls)
 
-      loadGLTFModel(scene, urlDogGLB, {
+      loadGLTFModel(scene, '/genny_final_ricky_2.glb', {
         receiveShadow: false,
         castShadow: false
-      }).then(() => {
+      }).then((gltf) => {
+        if (gltf && gltf.scene) {
+          scene.clear()
+
+          const model = gltf.scene
+          model.scale.set(0.001, 0.001, 0.001)
+          model.position.set(0, 0, 0)
+
+          model.traverse((node) => {
+            if (node.isMesh) {
+              // Dispose of existing material to avoid memory leaks
+              if (node.material) {
+                if (Array.isArray(node.material)) {
+                  node.material.forEach(mat => mat.dispose());
+                } else {
+                  node.material.dispose();
+                }
+              }
+          
+              // Apply a new gray material
+              node.material = new THREE.MeshLambertMaterial({
+                color: 0x808080, // Gray color
+                metalness: 0.0,  // Ensure no metalness to avoid reflections
+                roughness: 1.0,  // Increase roughness to minimize any reflections
+              });
+          
+              // Ensure that no textures are applied
+              if (node.material.map) node.material.map = null;
+              if (node.material.envMap) node.material.envMap = null;
+              if (node.material.specularMap) node.material.specularMap = null;
+              if (node.material.lightMap) node.material.lightMap = null;
+            }
+          });
+               
+
+          scene.add(model)
+          controls.target.copy(target)
+          controls.update()
+          camera.lookAt(target)
+        } else {
+          console.error("GLTF model or scene not loaded correctly.")
+        }
         animate()
+        setLoading(false)
+      }).catch(error => {
+        console.error("Error loading GLTF model:", error)
         setLoading(false)
       })
 
       let req = null
-      let frame = 0
       const animate = () => {
         req = requestAnimationFrame(animate)
-
-        frame = frame <= 100 ? frame + 1 : frame
-
-        if (frame <= 100) {
-          const p = initialCameraPosition
-          const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
-
-          camera.position.y = 10
-          camera.position.x =
-            p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
-          camera.position.z =
-            p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
-          camera.lookAt(target)
-        } else {
-          controls.update()
-        }
-
+        controls.update()
         renderer.render(scene, camera)
       }
 
@@ -116,7 +152,7 @@ const VoxelDog = () => {
     return () => {
       window.removeEventListener('resize', handleWindowResize, false)
     }
-  }, [handleWindowResize])
+  }, [renderer, handleWindowResize])
 
   return (
     <DogContainer ref={refContainer}>{loading && <DogSpinner />}</DogContainer>
