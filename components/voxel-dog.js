@@ -11,9 +11,10 @@ function easeOutCirc(x) {
 const VoxelDog = () => {
   const refContainer = useRef()
   const [loading, setLoading] = useState(true)
+  const [mounted, setMounted] = useState(false);
   const [renderer, setRenderer] = useState()
   const [_camera, setCamera] = useState()
-  const [target] = useState(new THREE.Vector3(0, -0.2, 0))  // Adjusted Y position
+  const [target] = useState(new THREE.Vector3(0, -0.2, 0))  //Adjusted Y position
   const [initialCameraPosition] = useState(
     new THREE.Vector3(0, 10, 20)
   )
@@ -31,6 +32,8 @@ const VoxelDog = () => {
   }, [renderer])
 
   useEffect(() => {
+    if (typeof window === 'undefined') return; //Ensure this runs only on the client
+
     const { current: container } = refContainer
     if (container && !renderer) {
       const scW = container.clientWidth
@@ -61,7 +64,7 @@ const VoxelDog = () => {
       camera.lookAt(target)
       setCamera(camera)
 
-      // Lighting adjustments
+      //Lighting adjustments
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
       scene.add(ambientLight)
 
@@ -93,7 +96,7 @@ const VoxelDog = () => {
 
           model.traverse((node) => {
             if (node.isMesh) {
-              // Dispose of existing material to avoid memory leaks
+              //Dispose of existing material to avoid memory leaks
               if (node.material) {
                 if (Array.isArray(node.material)) {
                   node.material.forEach(mat => mat.dispose());
@@ -102,7 +105,7 @@ const VoxelDog = () => {
                 }
               }
           
-              // Apply a new gray material
+              //Apply a new gray material
               node.material = new THREE.MeshLambertMaterial({
                 color: 0x808080, // Gray color
                 metalness: 0.0,  // Ensure no metalness to avoid reflections
