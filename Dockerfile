@@ -1,26 +1,21 @@
-# Stage 1: Build the application
-FROM node:16-alpine as builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy all project files to /app
+COPY package.json package-lock.json ./
+RUN npm ci
+
 COPY . .
-
-# Debugging step: Ensure all project files are copied
-RUN ls -la /app
-
-# Install dependencies and build the application
-RUN npm install
 RUN npm run build
 
-# Stage 2: Serve the application with a lightweight server
-FROM node:16-alpine
+FROM node:20-alpine
 WORKDIR /app
+ENV NODE_ENV=production
 
-# Copy everything from the builder stage
-COPY --from=builder /app /app
-
-# Final debugging step: Check the final structure
-RUN ls -la /app
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/next.config.js ./next.config.js
 
 EXPOSE 3000
 CMD ["npm", "start"]
