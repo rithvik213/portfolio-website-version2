@@ -2,7 +2,7 @@
 
 Personal website and portfolio — Next.js front-end, self-hosted on a homelab. Live at **[rntech.org](https://www.rntech.org/)**.
 
-Every push to GitHub kicks off a Jenkins pipeline that builds the Docker image, ships it to a local registry, and rolls the running container via Portainer.
+Jenkins polls GitHub every couple of minutes; on a new master commit it builds the Docker image and pushes it to a local registry. Watchtower watches the running container's image digest and redeploys when it sees a new one — usually within ~60s of the push completing.
 
 ## Stack
 
@@ -30,7 +30,7 @@ $PROJECT_ROOT
 
 ## Local development
 
-Requires Node 16+.
+Requires Node 20+.
 
 ```bash
 npm install
@@ -43,10 +43,12 @@ npm start            # serve the built app
 
 Vercel-compatible out of the box (`vercel.json` is checked in), but the live `rntech.org` instance runs on a self-hosted homelab:
 
-1. Push to GitHub triggers the Jenkins pipeline (`Jenkinsfile`).
-2. Jenkins clones the repo and builds the production Docker image (`Dockerfile`).
-3. The image is pushed to a local Docker registry.
-4. A Portainer API call rolls the running service to the new image.
+1. Jenkins polls master every ~2 minutes via SCM polling (`Jenkinsfile`).
+2. On a new commit, Jenkins builds the production Docker image (`Dockerfile`) using BuildKit.
+3. The image is tagged with the build ID + `latest` and pushed to a local Docker registry.
+4. Watchtower watches the running container, detects the new image digest, and recreates the container — typically within ~60s of the push.
+
+Portainer is used to manage the homelab stacks (Jenkins, Watchtower, the portfolio container itself), but is not part of the redeploy path.
 
 ## Credits
 
