@@ -22,9 +22,11 @@ const Work = () => (
         <Title>
             TripPlanner <Badge>Jan 2024 - Present</Badge>
         </Title>
-        <Button leftIcon={<BsGithub/>} colorScheme="teal" size='sm' variant='solid' isDisabled={true}>
-          Private Repo
-        </Button>
+        <Link href="https://github.com/rithvik213/TripPlanner" target="_blank">
+          <Button leftIcon={<BsGithub/>} colorScheme="teal" size='sm' variant='solid'>
+            View Source
+          </Button>
+        </Link>
     </Stack>
       <P>
       TripPlanner is an Android application developed using Kotlin, designed to provide personalized and seamless travel planning experiences. The app integrates with modern APIs and services to offer users a comprehensive travel solution directly on their mobile devices.
