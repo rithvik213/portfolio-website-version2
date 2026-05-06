@@ -7,6 +7,8 @@ import thumbTripPlanner from '../public/images/works/TripPlanner_eyecatch.png'
 import thumbTimo from '../public/images/works/Timo-picture-website-1.png'
 import thumbSenatorEdMarkey from '../public/images/works/senatoredmarkey_eyecatch.png'
 import thumbLinuxRamDisk from '../public/images/works/linux_ram_disk_eyecatch.png'
+import thumbBpl from '../public/images/works/bpl_rag.png'
+import thumbSnowflakeHarness from '../public/images/works/snowflake_harness.png'
 
 const Works = () => (
   <Layout title="Portfolio">
@@ -17,12 +19,24 @@ const Works = () => (
 
       <SimpleGrid columns={[1, 1, 2]} gap={6}>
         <Section>
+          <WorkGridItem id="bpl" title="Boston Public Library: RAG Search" thumbnail={thumbBpl}>
+          A retrieval-augmented search pipeline over 1.2M+ BPL records using pgvector, GPT-4o-mini query expansion, and BM25 reranking.
+          </WorkGridItem>
+        </Section>
+
+        <Section>
+          <WorkGridItem id="snowflake-harness" title="Automation Snowflake Harness" thumbnail={thumbSnowflakeHarness}>
+          A BU EC528 capstone with State Street: CI/CD-driven Snowflake resource automation using Liquibase + Harness, with RBAC, warehouse scaling, and a reusable CLI.
+          </WorkGridItem>
+        </Section>
+
+        <Section>
           <WorkGridItem id="tripplanner" title="TripPlanner" thumbnail={thumbTripPlanner}>
           A personalized travel app with Google Calendar sync, real-time navigation, and location-based recommendations
           </WorkGridItem>
         </Section>
 
-        <Section>
+        <Section delay={0.1}>
           <WorkGridItem id="timo" title="Timo" thumbnail={thumbTimo}>
           A time management app with Google Calendar integration, real-time travel tracking, and weather-based reminders.
           </WorkGridItem>
