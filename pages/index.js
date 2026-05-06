@@ -22,6 +22,8 @@ import { GridItem } from '../components/grid-item';
 import { BsGithub, BsLinkedin } from 'react-icons/bs';
 import Image from 'next/image';
 import VoxelDogLoader from '../components/voxel-dog-loader';
+import thumbBpl from '../public/images/works/bpl_rag.png';
+import thumbSnowflakeHarness from '../public/images/works/snowflake_harness.png';
 import thumbTripPlanner from '../public/images/works/TripPlanner_eyecatch.png';
 import thumbTimo from '../public/images/works/Timo-picture-website-1.png';
 import { WorkGridItem } from '../components/grid-item'
@@ -62,7 +64,7 @@ const Home = () => {
           bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
           css={{ backdropFilter: 'blur(10px)' }}
         >
-          Hello, I'm a BA/MS CS student at BU with a passion for cars!
+          Software Engineer at Oracle Cloud Infrastructure — Seattle, WA
         </Box>
 
         <Box display={{ md: 'flex' }}>
@@ -128,7 +130,7 @@ const Home = () => {
             About Me
           </Heading>
           <Paragraph>
-            Hey, I'm Rithvik! I'm a full-stack developer and computer science graduate student at Boston University. I'm deeply interested in enterprise architecture, database systems, and leveraging AI to enhance product value. At Verizon, I've led initiatives to optimize infrastructure and integrate advanced technologies, saving millions annually. I'm passionate about solving complex problems and creating impactful solutions.{' '}
+            Hey, I'm Rithvik — a software engineer at Oracle Cloud Infrastructure in Seattle, working on the Oracle Database@Google control plane. I build backend services and infrastructure tooling in Java, Go, and Python, with a focus on distributed systems, Kubernetes, and developer experience. I graduated from Boston University in May 2025 with a BA and MS in Computer Science. Before Oracle I interned at Verizon and Avis Budget Group. I care about clean APIs, resilient systems, and shipping things that make other engineers' lives easier.{' '}
           </Paragraph>
           <Box align="center" my={4}>
             <Button
@@ -148,33 +150,53 @@ const Home = () => {
           🚀 I&apos;m interested in...
           </Heading>
           <BioSection>
-            <BioYear>Enterprise Architecture</BioYear>
-            openshift, docker, kubernetes, jenkins
+            <BioYear>Backend Engineering</BioYear>
+            Java, Go, Python, Spring Boot, Dropwizard, OpenAPI
           </BioSection>
           <BioSection>
-            <BioYear>Database Systems</BioYear>
-            postgres, sql, mongodb, distributed systems
+            <BioYear>Distributed Systems</BioYear>
+            Distributed Control Planes, Resilient RESTful APIs, Zero-Trust Auth
           </BioSection>
           <BioSection>
-            <BioYear>AI & ML</BioYear>
-            tensorflow, ai model integration, data science
+            <BioYear>Cloud Infrastructure</BioYear>
+            Kubernetes, Terraform, Helm, OpenShift, Argo CD
           </BioSection>
           <BioSection>
-            <BioYear>Web & Mobile Development</BioYear>
-            react.js, node.js, kotlin, android, selenium, flask
+            <BioYear>Data &amp; Storage</BioYear>
+            PostgreSQL, pgvector, Redis, Spring Batch
           </BioSection>
           <BioSection>
-            <BioYear>Cloud & Infrastructure</BioYear>
-            aws, on-premise solutions, apache spark pipelines
+            <BioYear>Developer Tooling</BioYear>
+            CI/CD Pipelines, GitOps, Internal Platforms
           </BioSection>
         </Section>
 
         <Section delay={0.3}>
   <Heading as="h3" variant="section-title">
-    💡 I'm most proud of...
+    💡 I&apos;m most proud of...
   </Heading>
 
   <SimpleGrid columns={[1, 1, 2]} gap={6}>
+  <Section delay={0.3}>
+    <WorkGridItem
+      id="bpl"
+      title="BPL: RAG Search"
+      thumbnail={thumbBpl}
+    >
+      Semantic search over 1.2M+ Boston Public Library records
+    </WorkGridItem>
+  </Section>
+
+  <Section delay={0.3}>
+    <WorkGridItem
+      id="snowflake-harness"
+      title="Automation Snowflake Harness"
+      thumbnail={thumbSnowflakeHarness}
+    >
+      CI/CD-driven Snowflake automation built with State Street
+    </WorkGridItem>
+  </Section>
+
   <Section delay={0.3}>
     <WorkGridItem
       id="tripplanner"
@@ -195,13 +217,6 @@ const Home = () => {
     </WorkGridItem>
   </Section>
 </SimpleGrid>
-
-          <Heading as="h3" variant="section-title">
-          📷 Car Collection 
-          </Heading>
-          <p>
-          Photos and videos coming soon!
-          </p>
         </Section>
       </Container>
     </Layout>
