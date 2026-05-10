@@ -130,7 +130,7 @@ const Home = () => {
             About Me
           </Heading>
           <Paragraph>
-            Hey, I'm Rithvik — a software engineer at Oracle Cloud Infrastructure in Seattle, working on the Oracle Database@Google control plane. I build backend services and infrastructure tooling in Java, Go, and Python, with a focus on distributed systems, Kubernetes, and developer experience. I graduated from Boston University in May 2025 with a BA and MS in Computer Science. Before Oracle I interned at Verizon and Avis Budget Group. I care about clean APIs, resilient systems, and shipping things that make other engineers' lives easier.{' '}
+            I'm Rithvik, a software engineer at Oracle Cloud Infrastructure in Seattle, with experience in distributed systems, Kubernetes-based infrastructure, and backend services in Java and Go. I work on the Oracle Database@Google control plane — the system that provisions and manages Oracle databases running natively inside Google Cloud for multicloud customers.{' '}
           </Paragraph>
           <Box align="center" my={4}>
             <Button
