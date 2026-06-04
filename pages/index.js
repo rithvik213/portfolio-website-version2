@@ -64,7 +64,7 @@ const Home = () => {
           bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
           css={{ backdropFilter: 'blur(10px)' }}
         >
-          Software Engineer at Oracle Cloud Infrastructure — Seattle, WA
+          Software Engineer · Backend, Cloud & Distributed Systems
         </Box>
 
         <Box display={{ md: 'flex' }}>
@@ -130,7 +130,7 @@ const Home = () => {
             About Me
           </Heading>
           <Paragraph>
-            I'm Rithvik, a software engineer at Oracle Cloud Infrastructure in Seattle, with experience in distributed systems, Kubernetes-based infrastructure, and backend services in Java and Go. I work on the Oracle Database@Google control plane — the system that provisions and manages Oracle databases running natively inside Google Cloud for multicloud customers.{' '}
+            I'm Rithvik, a backend and cloud engineer who builds distributed systems and agentic AI tooling. Most recently I worked at Oracle Cloud Infrastructure on backend and platform systems in Java and Dropwizard, deployed on Kubernetes and managed with Terraform. I hold an MS in Computer Science from Boston University, and I'm increasingly focused on where backend engineering meets applied AI. I'm currently open to Software Engineer roles in backend, cloud, platform, and AI infrastructure.{' '}
           </Paragraph>
           <Box align="center" my={4}>
             <Button
